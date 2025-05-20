@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Эмоциональный антивирус</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    'sans': ['Montserrat', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: '#D4C3FF',
+                        text: '#3B2E58',
+                        textAlt: '#2B2B2B',
+                        bgLight: '#CDE3FF',
+                        bgMid: '#DCCBFF',
+                        bgDark: '#B9A2FF',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'fade-out': 'fadeOut 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'slide-in': 'slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'slide-out': 'slideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        fadeOut: {
+                            '0%': { opacity: '1' },
+                            '100%': { opacity: '0' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideOut: {
+                            '0%': { transform: 'translateY(0)', opacity: '1' },
+                            '100%': { transform: 'translateY(-20px)', opacity: '0' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-brand {
+                background: linear-gradient(135deg, #CDE3FF 0%, #DCCBFF 50%, #B9A2FF 100%);
+            }
+            .btn {
+                @apply bg-brand text-text font-medium py-3 px-4 rounded-lg shadow-md hover:bg-bgDark transition-all duration-300 text-center;
+            }
+            .btn-back {
+                @apply bg-brand/70 text-text font-medium py-2 px-4 rounded-lg shadow-md hover:bg-brand transition-all duration-300 text-center;
+            }
+            /* Стили для карточек с эффектом переворота */
+            .card-container {
+                perspective: 1000px;
+                width: 100%;
+                height: 100%;
+                min-height: 200px;
+                margin-bottom: 1rem;
+            }
+            .thought-card {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                min-height: 200px;
+                transition: transform 0.6s;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            .thought-card.flipped {
+                transform: rotateY(180deg);
+            }
+            .card-front, .card-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 1rem;
+                border-radius: 0.75rem;
+                overflow: hidden;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
+            }
+            .card-front::-webkit-scrollbar, .card-back::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+            .card-front {
+                background-color: rgba(255, 255, 255, 0.8);
+                color: #2B2B2B;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                font-size: 0.95rem;
+                font-weight: 500;
+            }
+            .card-back {
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #2B2B2B;
+                transform: rotateY(180deg);
+                overflow-y: auto;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                font-size: 0.9rem;
+                line-height: 1.4;
+                padding: 1.25rem;
+            }
+            .screen-transition {
+                @apply transition-all duration-500 ease-in-out transform;
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .screen-hidden {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            .btn-page {
+                @apply bg-white/60 text-white font-medium py-2 px-4 rounded-lg shadow-sm hover:bg-[#A7C8FF]/80 hover:scale-105 transition-all duration-300 mx-1 min-w-[40px] flex items-center justify-center;
+            }
+            .btn-page-active {
+                @apply bg-[#3B82F6] text-white font-bold transform scale-105;
+            }
+        }
+    </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<body class="bg-gradient-brand min-h-screen font-sans text-text" style="-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;">
+    <div class="container mx-auto px-4 py-6 max-w-md">
+        <!-- Header/Logo Bar -->
+        <div class="mb-8 w-full px-4 py-3">
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl font-bold text-white tracking-wide drop-shadow-md">Leo</h1>
+                <div class="rounded-full overflow-hidden bg-white/20 flex items-center justify-center" style="width: 70px; height: 70px;">
+                    <img src="logo.png" alt="Leo Logo" style="width: 80px; height: 80px; object-fit: contain;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Screen -->
+        <div id="main-screen" class="flex flex-col items-center screen-transition">
+            <div class="mb-6 text-center">
+                <h2 class="text-2xl font-bold mb-3 text-[#2B2B2B]">
+                    <span>Эмоциональный антивирус</span>
+                </h2>
+                <p class="text-center text-lg mb-4 text-[#2B2B2B]">Это мысли, которые кажутся правдой. Но на самом деле — это старые установки. Давайте посмотрим на них иначе?</p>
+                <p class="text-center text-base italic text-[#2B2B2B]">Нажмите на знакомую мысль ниже, чтобы увидеть, как её можно переосмыслить.</p>
+            </div>
+            
+            <div id="thoughts-container" class="grid grid-cols-2 gap-4 w-full mb-6">
+                <!-- Cards will be inserted here by JavaScript -->
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination-container" class="flex justify-center items-center my-4">
+                <!-- Pagination buttons will be inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Кнопка для переворота всех карточек удалена -->
+
+        <!-- Loading indicator -->
+        <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white/50 backdrop-blur-sm z-50 hidden">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
