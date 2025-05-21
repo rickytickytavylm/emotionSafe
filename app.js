@@ -186,9 +186,9 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = startIndex; i < endIndex; i++) {
             const item = thoughtsAndResponses[i];
             
-            // Create card container for 3D perspective
+            // Create card container with animation
             const cardContainer = document.createElement('div');
-            cardContainer.className = 'card-container';
+            cardContainer.className = 'card-container animate-fade-in';
             
             // Create the flippable card
             const card = document.createElement('div');
