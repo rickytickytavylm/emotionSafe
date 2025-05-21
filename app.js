@@ -260,16 +260,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check if any cards are flipped
         const flippedCards = document.querySelectorAll('.thought-card.flipped');
         
-        // If we're using Telegram, we can show/hide the main button based on card state
+        // Убрали кнопку Telegram MainButton, так как она не нужна при использовании карточек-перевертышей
         if (tg && tg.MainButton) {
-            if (flippedCards.length > 0) {
-                // Card is flipped to show response, show the back button
-                tg.MainButton.setText('Вернуться к списку');
-                tg.MainButton.show();
-            } else {
-                // All cards are flipped back, hide the button
-                tg.MainButton.hide();
-            }
+            tg.MainButton.hide();
         }
     }
 
@@ -298,10 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Event Listeners
-    // Telegram MainButton event
-    if (tg && tg.MainButton) {
-        tg.MainButton.onClick(flipAllCardsBack);
-    }
+    // Telegram MainButton обработчик удален, так как кнопка больше не используется
     
     // Initialize the app
     renderThoughts();
